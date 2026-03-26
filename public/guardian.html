@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stroke Prevention — Guardian</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>Guardian Dashboard</h1>
+      <a href="/">Patient View</a>
+    </header>
+
+    <main class="container guardian-layout">
+      <section class="card">
+        <h2>Live Patient Status</h2>
+        <pre id="patient-status">Loading...</pre>
+      </section>
+      <section class="card">
+        <h2>Live Events</h2>
+        <ul id="events" class="list"></ul>
+      </section>
+      <section class="card">
+        <h2>Alerts</h2>
+        <ul id="alerts" class="list"></ul>
+      </section>
+    </main>
+
+    <script src="/guardian.js"></script>
+  </body>
+</html>
