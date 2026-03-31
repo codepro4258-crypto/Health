@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Health Assistant & Food Reminder Planner</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <h1>Health Assistant</h1>
+        <p class="muted">Daily wellness tracking, nutrition reminders, and guardian support.</p>
+      </div>
+    </header>
+
+    <main class="container app-layout">
+      <section class="card">
+        <h2>Today at a glance</h2>
+        <div class="summary-grid">
+          <article>
+            <h3>Routine Progress</h3>
+            <p id="adherence">Loading...</p>
+          </article>
+          <article>
+            <h3>Last Vitals</h3>
+            <p id="last-vitals">No vitals logged yet.</p>
+          </article>
+          <article>
+            <h3>Next Meal Reminder</h3>
+            <p id="next-reminder">No reminders scheduled.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Health routine checklist</h2>
+        <ul id="routine-list" class="list"></ul>
+      </section>
+
+      <section class="card">
+        <h2>Log vitals</h2>
+        <form id="vitals-form" class="form-grid">
+          <label>Systolic (mmHg) <input type="number" name="systolic" min="80" max="220" required /></label>
+          <label>Diastolic (mmHg) <input type="number" name="diastolic" min="40" max="140" required /></label>
+          <label>Pulse (bpm) <input type="number" name="pulse" min="40" max="220" required /></label>
+          <button type="submit">Save vitals</button>
+        </form>
+        <p id="vitals-status" class="muted"></p>
+      </section>
+
+      <section class="card">
+        <h2>Food reminder planner</h2>
+        <p class="muted">Plan balanced meals and hydration reminders with clear due-time indicators.</p>
+        <form id="food-reminder-form" class="form-grid two-cols">
+          <label>Reminder title <input type="text" name="title" placeholder="Breakfast: oats + fruit" required /></label>
+          <label>Time <input type="time" name="time" required /></label>
+          <label>Frequency
+            <select name="frequency">
+              <option value="daily">Daily</option>
+              <option value="weekdays">Weekdays</option>
+              <option value="weekends">Weekends</option>
+            </select>
+          </label>
+          <button type="submit">Add reminder</button>
+        </form>
+        <ul id="food-reminder-list" class="list"></ul>
+      </section>
+
+      <section class="card">
+        <h2>Guardian monitoring feed</h2>
+        <pre id="patient-status">Loading patient monitor...</pre>
+        <h3>Live events</h3>
+        <ul id="events" class="list"></ul>
+        <h3>Alerts</h3>
+        <ul id="alerts" class="list"></ul>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

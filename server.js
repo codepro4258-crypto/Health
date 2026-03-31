@@ -96,12 +96,24 @@ function pushAlert(patientId, type, metric, value, threshold) {
 }
 
 function serveStatic(req, res, pathname) {
-  const safePath = pathname === '/' ? '/index.html' : pathname;
-  const fullPath = path.join(__dirname, 'public', safePath);
+  const rootIndexPath = path.join(__dirname, 'index.html');
+  if (pathname === '/' || pathname === '/index.html') {
+    return fs.readFile(rootIndexPath, (err, data) => {
+      if (err) {
+        res.writeHead(404);
+        return res.end('Not found');
+      }
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      return res.end(data);
+    });
+  }
+
+  const fullPath = path.join(__dirname, 'public', pathname);
   if (!fullPath.startsWith(path.join(__dirname, 'public'))) {
     res.writeHead(403);
     return res.end('Forbidden');
   }
+
   fs.readFile(fullPath, (err, data) => {
     if (err) {
       res.writeHead(404);
@@ -109,9 +121,10 @@ function serveStatic(req, res, pathname) {
     }
     const ext = path.extname(fullPath);
     const types = {
-      '.html': 'text/html',
       '.css': 'text/css',
-      '.js': 'application/javascript'
+      '.js': 'application/javascript',
+      '.svg': 'image/svg+xml',
+      '.webmanifest': 'application/manifest+json'
     };
     res.writeHead(200, { 'Content-Type': types[ext] || 'text/plain' });
     res.end(data);
