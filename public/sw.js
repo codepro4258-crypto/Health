@@ -1,8 +1,6 @@
 const CACHE_NAME = 'stroke-prevention-v1';
 const ASSETS = [
   '/',
-  '/patient',
-  '/guardian',
   '/index.html',
   '/guardian.html',
   '/styles.css',

@@ -54,10 +54,4 @@ form.addEventListener('submit', async (e) => {
   form.reset();
 });
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(() => {});
-  });
-}
-
 loadDashboard();
