@@ -1,6 +1,12 @@
 const patientHeaders = {
   'X-Role': 'patient',
-  'X-User-Id': 'u1',
+  'X-User-Id': PATIENT_ID,
+  'Content-Type': 'application/json'
+};
+
+const adminHeaders = {
+  'X-Role': 'admin',
+  'X-User-Id': ADMIN_ID,
   'Content-Type': 'application/json'
 };
 
@@ -129,7 +135,7 @@ async function loadDashboard() {
     const li = document.createElement('li');
     li.innerHTML = `
       <span>${item.title} (${item.due})</span>
-      <button ${item.status === 'completed' ? 'disabled' : ''}>${item.status === 'completed' ? 'Done' : 'Complete'}</button>
+      <button ${item.status === 'completed' ? 'disabled' : ''}>${item.status === 'completed' ? 'Submitted' : 'Mark Complete'}</button>
     `;
     li.querySelector('button').addEventListener('click', () => completeRoutine(item.id));
     routineList.appendChild(li);
@@ -149,7 +155,7 @@ vitalsForm.addEventListener('submit', async (e) => {
     diastolic: Number(fd.get('diastolic')),
     pulse: Number(fd.get('pulse'))
   };
-  const res = await fetch('/api/patient/u1/vitals', {
+  const res = await fetch(`/api/patient/${PATIENT_ID}/vitals`, {
     method: 'POST',
     headers: patientHeaders,
     body: JSON.stringify(body)
