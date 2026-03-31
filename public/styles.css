@@ -1,0 +1,91 @@
+:root {
+  --primary: #0e7490;
+  --surface: #ffffff;
+  --bg: #f8fafc;
+  --danger: #b91c1c;
+  --ok: #15803d;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+  background: var(--bg);
+  color: #0f172a;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.topbar {
+  background: var(--primary);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: calc(12px + env(safe-area-inset-top)) 16px 12px;
+}
+.topbar h1 { margin: 0; font-size: 1.1rem; }
+.topbar a { color: #ecfeff; white-space: nowrap; }
+.container {
+  width: min(1100px, 100% - 24px);
+  margin: 16px auto;
+  display: grid;
+  gap: 16px;
+}
+.patient-layout { grid-template-columns: 1fr; }
+.guardian-layout { grid-template-columns: 1fr; }
+.card {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+.list { list-style: none; margin: 0; padding: 0; }
+.list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 10px 0;
+}
+.list li span { flex: 1; }
+button {
+  border: 0;
+  background: var(--primary);
+  color: white;
+  border-radius: 10px;
+  min-height: 44px;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+button.secondary { background: #334155; }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+.form-grid { display: grid; gap: 10px; }
+label { display: grid; gap: 6px; }
+input {
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  min-height: 44px;
+  font-size: 16px;
+  padding: 8px;
+}
+#patient-status {
+  max-height: 320px;
+  overflow: auto;
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 12px;
+}
+.ok { color: var(--ok); }
+.bad { color: var(--danger); }
+
+@media (min-width: 768px) {
+  .patient-layout { grid-template-columns: 1fr 1fr; }
+  .topbar h1 { font-size: 1.25rem; }
+}
+@media (min-width: 1024px) {
+  .guardian-layout { grid-template-columns: 1.2fr 1fr 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto; }
+}
