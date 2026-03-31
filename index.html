@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stroke Prevention App - Overview</title>
+  <style>
+    :root {
+      --bg: #f5f8fc;
+      --surface: #ffffff;
+      --text: #1a2a3a;
+      --muted: #5f6f80;
+      --primary: #1f5ca8;
+      --accent: #0f8c7a;
+      --border: #d9e3ef;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.5;
+    }
+
+    .container {
+      width: min(1040px, 92%);
+      margin: 0 auto;
+    }
+
+    header {
+      background: var(--primary);
+      color: #fff;
+      padding: 1rem 0;
+      border-bottom: 4px solid #15447d;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.4rem;
+    }
+
+    .topbar a {
+      color: #fff;
+      text-decoration: underline;
+      font-weight: 700;
+    }
+
+    main {
+      padding: 1.2rem 0 2rem;
+    }
+
+    .hero, .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.2rem;
+    }
+
+    .hero h2 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 72ch;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .btn {
+      display: inline-block;
+      border-radius: 8px;
+      padding: 0.65rem 1rem;
+      text-decoration: none;
+      font-weight: 700;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .grid {
+      margin-top: 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1rem;
+    }
+
+    .panel h3 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      font-size: 1.05rem;
+    }
+
+    .panel p,
+    .panel li {
+      color: var(--muted);
+    }
+
+    .panel ul {
+      margin: 0;
+      padding-left: 1.1rem;
+    }
+
+    .status {
+      margin-top: 1rem;
+      padding: 0.75rem 0.9rem;
+      border-left: 4px solid var(--accent);
+      background: #ecfaf7;
+      border-radius: 8px;
+      color: #23564f;
+    }
+
+    footer {
+      margin-top: 1.4rem;
+      border-top: 1px solid var(--border);
+      padding: 1rem 0 1.5rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container topbar">
+      <h1>Stroke Prevention App</h1>
+      <a href="/">Open Patient Dashboard</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h2>Care coordination for patients and guardians</h2>
+      <p>
+        This project provides a lightweight monitoring flow where patients log routines and vitals,
+        while guardians can monitor progress and receive alerts when risk thresholds are exceeded.
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href="/">Run App (Server route)</a>
+        <a class="btn btn-secondary" href="/guardian.html">Guardian View</a>
+      </div>
+      <p class="status"><strong>Demo users:</strong> Patient ID <code>u1</code> and Guardian ID <code>g1</code>.</p>
+    </section>
+
+    <section class="grid" aria-label="Feature Overview">
+      <article class="panel">
+        <h3>Patient workflow</h3>
+        <ul>
+          <li>View daily routines and adherence progress.</li>
+          <li>Mark routine tasks as completed.</li>
+          <li>Log blood pressure and pulse measurements.</li>
+        </ul>
+      </article>
+
+      <article class="panel">
+        <h3>Guardian workflow</h3>
+        <ul>
+          <li>Monitor linked patient adherence and latest vitals.</li>
+          <li>Receive real-time updates via SSE events.</li>
+          <li>Access alerts and acknowledge/resolution flows.</li>
+        </ul>
+      </article>
+
+      <article class="panel">
+        <h3>Risk and safety checks</h3>
+        <ul>
+          <li>Critical blood pressure threshold: 140/90 or higher.</li>
+          <li>Pulse warning threshold: 120 bpm or higher.</li>
+          <li>Audit log events for guardian monitor access.</li>
+        </ul>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      Built for the Health repository MVP. Start the server and open <code>http://localhost:3000</code>.
+    </div>
+  </footer>
+</body>
+</html>
