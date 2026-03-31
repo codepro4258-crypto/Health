@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0e7490" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>Stroke Prevention — Patient</title>
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icon.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>Stroke Prevention</h1>
+      <a href="/guardian">Guardian View</a>
+    </header>
+
+    <main class="container patient-layout">
+      <section class="card">
+        <h2>Today's Routine</h2>
+        <p id="adherence">Loading...</p>
+        <ul id="routine-list" class="list"></ul>
+      </section>
+
+      <section class="card">
+        <h2>Log Vitals</h2>
+        <form id="vitals-form" class="form-grid">
+          <label>Systolic <input type="number" inputmode="numeric" name="systolic" required /></label>
+          <label>Diastolic <input type="number" inputmode="numeric" name="diastolic" required /></label>
+          <label>Pulse <input type="number" inputmode="numeric" name="pulse" required /></label>
+          <button type="submit">Save Vitals</button>
+        </form>
+        <p id="vitals-status"></p>
+      </section>
+    </main>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "Stroke Prevention Companion",
+  "short_name": "StrokeCare",
+  "description": "Daily routines, vitals logging, and live guardian monitoring for stroke prevention.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#0e7490",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
