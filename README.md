@@ -6,7 +6,7 @@ This repository contains a simple Node.js MVP for patient routine tracking, admi
 
 - **Patient dashboard** for daily routines and vitals entry.
 - **Food reminder planner** for meal scheduling with due-time status indicators.
-- **Administrator console** for assigning routines to patients and viewing reports in real-time.
+- **Guardian dashboard** for remote monitoring and alerts.
 - **HTTP API** for routines, vitals, monitor data, and alert acknowledgement.
 - **Server-Sent Events (SSE)** stream for administrator real-time updates.
 
@@ -24,7 +24,7 @@ npm start
 
 Then open:
 
-- `http://localhost:3000` - unified health assistant dashboard with patient + administrator views
+- `http://localhost:3000` - unified health assistant dashboard served from `index.html`
 
 ## Notes
 

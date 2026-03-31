@@ -1,6 +1,3 @@
-const PATIENT_ID = 'u1';
-const ADMIN_ID = 'a1';
-
 const patientHeaders = {
   'X-Role': 'patient',
   'X-User-Id': PATIENT_ID,
@@ -10,6 +7,12 @@ const patientHeaders = {
 const adminHeaders = {
   'X-Role': 'admin',
   'X-User-Id': ADMIN_ID,
+  'Content-Type': 'application/json'
+};
+
+const guardianHeaders = {
+  'X-Role': 'guardian',
+  'X-User-Id': 'g1',
   'Content-Type': 'application/json'
 };
 
@@ -24,8 +27,6 @@ const foodReminderList = document.querySelector('#food-reminder-list');
 const nextReminder = document.querySelector('#next-reminder');
 const FOOD_KEY = 'health-food-reminders-v1';
 
-const adminRoutineForm = document.querySelector('#admin-routine-form');
-const adminRoutineStatus = document.querySelector('#admin-routine-status');
 const patientStatus = document.querySelector('#patient-status');
 const events = document.querySelector('#events');
 const alerts = document.querySelector('#alerts');
@@ -121,10 +122,10 @@ foodForm.addEventListener('submit', (e) => {
 
 setInterval(renderFoodReminders, 60_000);
 
-async function loadPatientDashboard() {
-  const res = await fetch(`/api/patient/${PATIENT_ID}/dashboard`, { headers: patientHeaders });
+async function loadDashboard() {
+  const res = await fetch('/api/patient/u1/dashboard', { headers: patientHeaders });
   const data = await res.json();
-  adherence.textContent = `Completed ${data.adherence.completed}/${data.adherence.total} assigned routines`;
+  adherence.textContent = `Completed ${data.adherence.completed}/${data.adherence.total} tasks`;
   if (data.lastVitals) {
     lastVitals.textContent = `${data.lastVitals.systolic}/${data.lastVitals.diastolic} mmHg, pulse ${data.lastVitals.pulse} bpm at ${new Date(data.lastVitals.at).toLocaleTimeString()}`;
   }
@@ -142,12 +143,8 @@ async function loadPatientDashboard() {
 }
 
 async function completeRoutine(id) {
-  const res = await fetch(`/api/patient/${PATIENT_ID}/routines/${id}/complete`, { method: 'POST', headers: patientHeaders });
-  if (res.ok) {
-    addEvent('Patient marked a routine as completed');
-    loadPatientDashboard();
-    loadAdminReport();
-  }
+  await fetch(`/api/patient/u1/routines/${id}/complete`, { method: 'POST', headers: patientHeaders });
+  loadDashboard();
 }
 
 vitalsForm.addEventListener('submit', async (e) => {
@@ -169,102 +166,62 @@ vitalsForm.addEventListener('submit', async (e) => {
     vitalsStatus.className = 'bad';
     return;
   }
-  vitalsStatus.textContent = `Submitted at ${new Date(data.vitals.at).toLocaleTimeString()}`;
+  vitalsStatus.textContent = `Saved at ${new Date(data.vitals.at).toLocaleTimeString()}`;
   vitalsStatus.className = 'ok';
   vitalsForm.reset();
-  loadPatientDashboard();
-  loadAdminReport();
+  loadDashboard();
+  loadGuardianStatus();
 });
 
-adminRoutineForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const fd = new FormData(adminRoutineForm);
-  const payload = {
-    title: String(fd.get('title')).trim(),
-    due: String(fd.get('due'))
-  };
-  const res = await fetch(`/api/admin/${ADMIN_ID}/patients/${PATIENT_ID}/routines`, {
-    method: 'POST',
-    headers: adminHeaders,
-    body: JSON.stringify(payload)
-  });
+async function loadGuardianStatus() {
+  const res = await fetch('/api/guardian/g1/monitors/u1', { headers: guardianHeaders });
   const data = await res.json();
-  if (!res.ok) {
-    adminRoutineStatus.textContent = data.error;
-    adminRoutineStatus.className = 'bad';
-    return;
-  }
-  adminRoutineStatus.textContent = `Assigned routine "${data.routine.title}" for ${data.routine.due}`;
-  adminRoutineStatus.className = 'ok';
-  adminRoutineForm.reset();
-  loadPatientDashboard();
-  loadAdminReport();
-});
-
-async function loadAdminReport() {
-  const res = await fetch(`/api/admin/${ADMIN_ID}/patients/${PATIENT_ID}/report`, { headers: adminHeaders });
-  const data = await res.json();
-  patientStatus.textContent = JSON.stringify(
-    {
-      adherence: data.adherence,
-      latestRoutineReport: data.routineReports[0] || null,
-      lastVitals: data.lastVitals,
-      openAlerts: data.alerts.filter((a) => a.status === 'open').length
-    },
-    null,
-    2
-  );
+  patientStatus.textContent = JSON.stringify(data, null, 2);
 }
 
-async function loadAdminAlerts() {
-  const res = await fetch(`/api/admin/${ADMIN_ID}/alerts`, { headers: adminHeaders });
+async function loadAlerts() {
+  const res = await fetch('/api/guardian/g1/alerts', { headers: guardianHeaders });
   const data = await res.json();
   alerts.innerHTML = '';
-  for (const alert of data) {
+  for (const alert of data.reverse()) {
     const li = document.createElement('li');
     li.innerHTML = `
       <span>[${alert.type}] ${alert.metric}=${alert.value} (${alert.status})</span>
       <button class="secondary" ${alert.status !== 'open' ? 'disabled' : ''}>Acknowledge</button>
     `;
     li.querySelector('button').addEventListener('click', async () => {
-      await fetch(`/api/admin/${ADMIN_ID}/alerts/${alert.id}/ack`, { method: 'POST', headers: adminHeaders });
-      addEvent(`Admin acknowledged alert ${alert.id.slice(0, 6)}`);
-      loadAdminAlerts();
-      loadAdminReport();
+      await fetch(`/api/guardian/g1/alerts/${alert.id}/ack`, { method: 'POST', headers: guardianHeaders });
+      addEvent(`Acknowledged alert ${alert.id.slice(0, 6)}`);
+      loadAlerts();
+      loadGuardianStatus();
     });
     alerts.appendChild(li);
   }
 }
 
-function connectAdminStream() {
-  const evt = new EventSource(`/admin/stream?role=admin&userId=${ADMIN_ID}`);
-  evt.addEventListener('connected', () => addEvent('Admin real-time channel connected'));
-  evt.addEventListener('routine_report', (e) => {
+function connectStream() {
+  const evt = new EventSource('/guardian/stream?role=guardian&userId=g1');
+  evt.addEventListener('connected', () => addEvent('Live connection established'));
+  evt.addEventListener('routine', (e) => {
     const data = JSON.parse(e.data);
-    addEvent(`Routine report submitted: ${data.title} (${data.status})`);
-    loadAdminReport();
-  });
-  evt.addEventListener('routine_added', (e) => {
-    const data = JSON.parse(e.data);
-    addEvent(`Admin assigned routine: ${data.routine.title}`);
-    loadPatientDashboard();
-    loadAdminReport();
+    addEvent(`Routine complete: ${data.title}`);
+    loadGuardianStatus();
   });
   evt.addEventListener('vitals', (e) => {
     const data = JSON.parse(e.data);
-    addEvent(`Vitals report: ${data.entry.systolic}/${data.entry.diastolic}, pulse ${data.entry.pulse}`);
-    loadAdminReport();
+    addEvent(`Vitals logged: ${data.entry.systolic}/${data.entry.diastolic}, pulse ${data.entry.pulse}`);
+    loadGuardianStatus();
   });
   evt.addEventListener('alert', (e) => {
     const data = JSON.parse(e.data);
     addEvent(`ALERT ${data.type}: ${data.metric}=${data.value}`);
-    loadAdminAlerts();
-    loadAdminReport();
+    loadAlerts();
+    loadGuardianStatus();
   });
 }
 
-loadPatientDashboard();
+loadDashboard();
 renderFoodReminders();
-loadAdminReport();
-loadAdminAlerts();
-connectAdminStream();
+loadGuardianStatus();
+loadAlerts();
+connectStream();
