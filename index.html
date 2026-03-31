@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Health Assistant & Routine Reporting</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <h1>Health Assistant & Food Reminder Planner</h1>
+        <p class="muted">Patients complete assigned routines and admins monitor reports in real time.</p>
+      </div>
+      <div class="stream-chip" id="stream-status">Live feed: connecting…</div>
+    </header>
+
+    <main class="container app-layout">
+      <section class="card">
+        <h2>Patient Dashboard (u1)</h2>
+        <div class="summary-grid">
+          <article>
+            <h3>Routine Progress</h3>
+            <p id="adherence">Loading...</p>
+          </article>
+          <article>
+            <h3>Last Vitals</h3>
+            <p id="last-vitals">No vitals logged yet.</p>
+          </article>
+          <article>
+            <h3>Next Food Reminder</h3>
+            <p id="next-reminder">No reminders scheduled.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Assigned Routine Checklist</h2>
+        <ul id="routine-list" class="list"></ul>
+      </section>
+
+      <section class="card">
+        <h2>Submit Vitals Report</h2>
+        <form id="vitals-form" class="form-grid">
+          <label>Systolic (mmHg) <input type="number" name="systolic" min="80" max="220" required /></label>
+          <label>Diastolic (mmHg) <input type="number" name="diastolic" min="40" max="140" required /></label>
+          <label>Pulse (bpm) <input type="number" name="pulse" min="40" max="220" required /></label>
+          <button type="submit">Submit Vitals</button>
+        </form>
+        <p id="vitals-status" class="status-text" aria-live="polite"></p>
+      </section>
+
+      <section class="card">
+        <h2>Food Reminder Planner</h2>
+        <form id="food-reminder-form" class="form-grid two-cols">
+          <label>Reminder title <input type="text" name="title" placeholder="Lunch: low-sodium meal" required /></label>
+          <label>Time <input type="time" name="time" required /></label>
+          <label>Frequency
+            <select name="frequency">
+              <option value="daily">Daily</option>
+              <option value="weekdays">Weekdays</option>
+              <option value="weekends">Weekends</option>
+            </select>
+          </label>
+          <button type="submit">Add Reminder</button>
+        </form>
+        <ul id="food-reminder-list" class="list"></ul>
+      </section>
+
+      <section class="card admin-panel">
+        <h2>Administrator Console (a1)</h2>
+        <form id="admin-routine-form" class="form-grid two-cols">
+          <label>Routine task <input type="text" name="title" placeholder="Evening breathing exercise" required /></label>
+          <label>Due time <input type="time" name="due" required /></label>
+          <button type="submit">Assign Routine</button>
+        </form>
+        <p id="admin-routine-status" class="status-text" aria-live="polite"></p>
+
+        <h3>Patient Snapshot</h3>
+        <pre id="patient-status">Loading admin report...</pre>
+
+        <h3>Live Report Events</h3>
+        <ul id="events" class="list"></ul>
+
+        <h3>Alerts</h3>
+        <ul id="alerts" class="list"></ul>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <small>Professional care workflow · real-time routine reporting · nutrition reminders</small>
+    </footer>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
