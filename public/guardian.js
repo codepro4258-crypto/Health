@@ -7,20 +7,11 @@ const headers = {
 const status = document.querySelector('#patient-status');
 const events = document.querySelector('#events');
 const alerts = document.querySelector('#alerts');
-let statusRefreshTimer = null;
 
 function addEvent(message) {
   const li = document.createElement('li');
   li.textContent = `${new Date().toLocaleTimeString()} — ${message}`;
   events.prepend(li);
-}
-
-function requestStatusRefresh() {
-  if (statusRefreshTimer) return;
-  statusRefreshTimer = setTimeout(async () => {
-    statusRefreshTimer = null;
-    await loadStatus();
-  }, 250);
 }
 
 async function loadStatus() {
@@ -43,7 +34,7 @@ async function loadAlerts() {
       await fetch(`/api/guardian/g1/alerts/${alert.id}/ack`, { method: 'POST', headers });
       addEvent(`Acknowledged alert ${alert.id.slice(0, 6)}`);
       loadAlerts();
-      requestStatusRefresh();
+      loadStatus();
     });
     alerts.appendChild(li);
   }
@@ -55,24 +46,18 @@ function connectStream() {
   evt.addEventListener('routine', (e) => {
     const data = JSON.parse(e.data);
     addEvent(`Routine complete: ${data.title}`);
-    requestStatusRefresh();
+    loadStatus();
   });
   evt.addEventListener('vitals', (e) => {
     const data = JSON.parse(e.data);
     addEvent(`Vitals logged: ${data.entry.systolic}/${data.entry.diastolic}, pulse ${data.entry.pulse}`);
-    requestStatusRefresh();
+    loadStatus();
   });
   evt.addEventListener('alert', (e) => {
     const data = JSON.parse(e.data);
     addEvent(`ALERT ${data.type}: ${data.metric}=${data.value}`);
     loadAlerts();
-    requestStatusRefresh();
-  });
-}
-
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(() => {});
+    loadStatus();
   });
 }
 
