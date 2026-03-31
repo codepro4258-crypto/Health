@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Health Assistant & Routine Reporting</title>
+    <title>Health Assistant & Food Reminder Planner</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
@@ -11,12 +12,15 @@
       <div>
         <h1>Health Assistant & Food Reminder Planner</h1>
         <p class="muted">Patients complete assigned routines and admins monitor reports in real time.</p>
+        <h1>Health Assistant</h1>
+        <p class="muted">Daily wellness tracking, nutrition reminders, and guardian support.</p>
       </div>
     </header>
 
     <main class="container app-layout">
       <section class="card">
         <h2>Patient Dashboard (u1)</h2>
+        <h2>Today at a glance</h2>
         <div class="summary-grid">
           <article>
             <h3>Routine Progress</h3>
@@ -28,6 +32,7 @@
           </article>
           <article>
             <h3>Next Food Reminder</h3>
+            <h3>Next Meal Reminder</h3>
             <p id="next-reminder">No reminders scheduled.</p>
           </article>
         </div>
@@ -35,11 +40,13 @@
 
       <section class="card">
         <h2>Assigned Routine Checklist</h2>
+        <h2>Health routine checklist</h2>
         <ul id="routine-list" class="list"></ul>
       </section>
 
       <section class="card">
         <h2>Submit Vitals Report</h2>
+        <h2>Log vitals</h2>
         <form id="vitals-form" class="form-grid">
           <label>Systolic (mmHg) <input type="number" name="systolic" min="80" max="220" required /></label>
           <label>Diastolic (mmHg) <input type="number" name="diastolic" min="40" max="140" required /></label>
@@ -53,6 +60,16 @@
         <h2>Food Reminder Planner</h2>
         <form id="food-reminder-form" class="form-grid two-cols">
           <label>Reminder title <input type="text" name="title" placeholder="Lunch: low-sodium meal" required /></label>
+          <button type="submit">Save vitals</button>
+        </form>
+        <p id="vitals-status" class="muted"></p>
+      </section>
+
+      <section class="card">
+        <h2>Food reminder planner</h2>
+        <p class="muted">Plan balanced meals and hydration reminders with clear due-time indicators.</p>
+        <form id="food-reminder-form" class="form-grid two-cols">
+          <label>Reminder title <input type="text" name="title" placeholder="Breakfast: oats + fruit" required /></label>
           <label>Time <input type="time" name="time" required /></label>
           <label>Frequency
             <select name="frequency">
@@ -62,6 +79,7 @@
             </select>
           </label>
           <button type="submit">Add Reminder</button>
+          <button type="submit">Add reminder</button>
         </form>
         <ul id="food-reminder-list" class="list"></ul>
       </section>
@@ -81,6 +99,11 @@
         <h3>Live Report Events</h3>
         <ul id="events" class="list"></ul>
 
+      <section class="card">
+        <h2>Guardian monitoring feed</h2>
+        <pre id="patient-status">Loading patient monitor...</pre>
+        <h3>Live events</h3>
+        <ul id="events" class="list"></ul>
         <h3>Alerts</h3>
         <ul id="alerts" class="list"></ul>
       </section>
