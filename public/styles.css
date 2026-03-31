@@ -1,7 +1,9 @@
 :root {
   --primary: #0e7490;
+  --primary-dark: #155e75;
   --surface: #ffffff;
   --bg: #f8fafc;
+  --border: #e2e8f0;
   --danger: #b91c1c;
   --ok: #15803d;
   --text-muted: #475569;
@@ -13,12 +15,16 @@
 
 body {
   margin: 0;
-  font-family: Inter, system-ui, sans-serif;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   background: var(--bg);
   color: #0f172a;
 }
 
 .topbar {
+  background: linear-gradient(120deg, var(--primary), var(--primary-dark));
+  color: #fff;
+  padding: 18px 16px;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
   background: var(--primary);
   color: white;
   padding: 16px;
@@ -26,11 +32,12 @@ body {
 
 .topbar h1 {
   margin: 0;
+  font-size: 1.35rem;
 }
 
 .container {
-  width: min(1100px, 100% - 24px);
-  margin: 16px auto;
+  width: min(1120px, 100% - 24px);
+  margin: 18px auto 30px;
   display: grid;
   gap: 16px;
 }
@@ -41,13 +48,20 @@ body {
 
 .card {
   background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(2, 8, 23, 0.05);
+}
+
+.admin-panel {
+  border-left: 4px solid var(--primary);
 }
 
 .summary-grid {
   display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 10px;
 }
@@ -59,6 +73,8 @@ body {
   padding: 10px;
 }
 
+.summary-grid h3,
+.card h3 {
 .summary-grid h3 {
   margin: 0 0 8px;
   font-size: 0.95rem;
@@ -74,18 +90,57 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 8px;
-  border-bottom: 1px solid #e2e8f0;
+  gap: 10px;
+  border-bottom: 1px solid var(--border);
   padding: 10px 0;
+}
+
+.list li:last-child {
+  border-bottom: 0;
+}
+
+.form-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.form-grid.two-cols {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  align-items: end;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+  color: #1e293b;
+}
+
+input,
+select,
+button {
+  font: inherit;
+}
+
+input,
+select {
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  min-height: 42px;
+  padding: 8px 10px;
 }
 
 button {
   border: 0;
   background: var(--primary);
-  color: white;
+  color: #fff;
   border-radius: 10px;
+  min-height: 42px;
   padding: 8px 12px;
   cursor: pointer;
+}
+
+button:hover {
+  filter: brightness(0.95);
 }
 
 button.secondary {
@@ -95,6 +150,50 @@ button.secondary {
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.status-text {
+  margin-top: 10px;
+}
+
+.ok {
+  color: var(--ok);
+}
+
+.bad {
+  color: var(--danger);
+}
+
+.inline-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pill {
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  padding: 2px 9px;
+  font-size: 0.82rem;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+.status-scheduled .pill {
+  border-color: #bfdbfe;
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.status-upcoming .pill,
+.status-due-now .pill {
+  border-color: #fde68a;
+  background: #fefce8;
+  color: #854d0e;
 }
 
 .form-grid {
