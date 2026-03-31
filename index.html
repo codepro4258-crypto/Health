@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stroke Prevention App - Overview</title>
+  <title>City Services Portal</title>
   <style>
     :root {
-      --bg: #f5f8fc;
+      --bg: #f3f6fa;
       --surface: #ffffff;
-      --text: #1a2a3a;
-      --muted: #5f6f80;
-      --primary: #1f5ca8;
-      --accent: #0f8c7a;
-      --border: #d9e3ef;
+      --text: #1d2a36;
+      --muted: #5d6b78;
+      --brand: #1e5fae;
+      --brand-dark: #16477f;
+      --border: #dbe4ee;
     }
 
     * { box-sizing: border-box; }
@@ -20,187 +20,226 @@
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      color: var(--text);
       background: var(--bg);
+      color: var(--text);
       line-height: 1.5;
     }
 
+    header {
+      background: var(--brand);
+      color: #fff;
+      padding: 1rem 0;
+      border-bottom: 4px solid var(--brand-dark);
+    }
+
     .container {
-      width: min(1040px, 92%);
+      width: min(1080px, 92%);
       margin: 0 auto;
     }
 
-    header {
-      background: var(--primary);
-      color: #fff;
-      padding: 1rem 0;
-      border-bottom: 4px solid #15447d;
-    }
-
-    .topbar {
+    .header-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 1rem;
       flex-wrap: wrap;
-      gap: 0.8rem;
     }
 
-    h1 {
+    .site-title {
       margin: 0;
       font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
     }
 
-    .topbar a {
+    .utility-links {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .utility-links a {
       color: #fff;
       text-decoration: underline;
-      font-weight: 700;
+      text-underline-offset: 2px;
     }
 
-    main {
-      padding: 1.2rem 0 2rem;
+    nav {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
     }
 
-    .hero, .panel {
-      background: var(--surface);
+    .nav-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .nav-list a {
+      display: inline-block;
+      padding: 0.8rem 0;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .hero {
+      background: linear-gradient(180deg, #fff 0%, #eef3f8 100%);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1.2rem;
+      border-radius: 8px;
+      margin-top: 1.2rem;
+      padding: 1.6rem;
     }
 
     .hero h2 {
-      margin-top: 0;
-      margin-bottom: 0.5rem;
+      margin: 0 0 0.6rem;
+      font-size: 1.7rem;
     }
 
     .hero p {
       margin: 0;
       color: var(--muted);
-      max-width: 72ch;
+      max-width: 70ch;
     }
 
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-top: 1rem;
-    }
-
-    .btn {
-      display: inline-block;
-      border-radius: 8px;
-      padding: 0.65rem 1rem;
-      text-decoration: none;
-      font-weight: 700;
-      border: 1px solid transparent;
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: #fff;
-    }
-
-    .btn-secondary {
-      background: #fff;
-      color: var(--primary);
-      border-color: var(--primary);
+    main {
+      padding: 1.4rem 0 2rem;
     }
 
     .grid {
-      margin-top: 1rem;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 1rem;
-    }
-
-    .panel h3 {
-      margin-top: 0;
-      margin-bottom: 0.5rem;
-      font-size: 1.05rem;
-    }
-
-    .panel p,
-    .panel li {
-      color: var(--muted);
-    }
-
-    .panel ul {
-      margin: 0;
-      padding-left: 1.1rem;
-    }
-
-    .status {
       margin-top: 1rem;
-      padding: 0.75rem 0.9rem;
-      border-left: 4px solid var(--accent);
-      background: #ecfaf7;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: 8px;
-      color: #23564f;
+      padding: 1rem;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      font-size: 1.08rem;
+    }
+
+    .card p {
+      color: var(--muted);
+      margin-bottom: 0.8rem;
+      font-size: 0.95rem;
+    }
+
+    .card a {
+      color: var(--brand);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .announcements {
+      margin-top: 1.5rem;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+
+    .announcements h3 {
+      margin-top: 0;
+    }
+
+    .announcements ul {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+
+    .announcements li + li {
+      margin-top: 0.5rem;
     }
 
     footer {
-      margin-top: 1.4rem;
       border-top: 1px solid var(--border);
-      padding: 1rem 0 1.5rem;
+      background: #fff;
       color: var(--muted);
+      padding: 1.1rem 0 1.5rem;
       font-size: 0.92rem;
     }
   </style>
 </head>
 <body>
   <header>
-    <div class="container topbar">
-      <h1>Stroke Prevention App</h1>
-      <a href="/">Open Patient Dashboard</a>
+    <div class="container header-row">
+      <h1 class="site-title">City of Brookfield — Citizen Services</h1>
+      <div class="utility-links" aria-label="Utility Links">
+        <a href="#">Translate</a>
+        <a href="#">Accessibility</a>
+        <a href="#">Contact Us</a>
+      </div>
     </div>
   </header>
 
+  <nav aria-label="Main Navigation">
+    <div class="container">
+      <ul class="nav-list">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Pay Bills</a></li>
+        <li><a href="#">Report an Issue</a></li>
+        <li><a href="#">Permits & Licenses</a></li>
+        <li><a href="#">Public Safety</a></li>
+        <li><a href="#">Parks & Recreation</a></li>
+      </ul>
+    </div>
+  </nav>
+
   <main class="container">
     <section class="hero">
-      <h2>Care coordination for patients and guardians</h2>
+      <h2>Welcome, Residents</h2>
       <p>
-        This project provides a lightweight monitoring flow where patients log routines and vitals,
-        while guardians can monitor progress and receive alerts when risk thresholds are exceeded.
+        Use this portal to access everyday city services quickly—whether you need to pay utilities,
+        request repairs, view local notices, or find important community resources.
       </p>
-      <div class="actions">
-        <a class="btn btn-primary" href="/">Run App (Server route)</a>
-        <a class="btn btn-secondary" href="/guardian.html">Guardian View</a>
-      </div>
-      <p class="status"><strong>Demo users:</strong> Patient ID <code>u1</code> and Guardian ID <code>g1</code>.</p>
     </section>
 
-    <section class="grid" aria-label="Feature Overview">
-      <article class="panel">
-        <h3>Patient workflow</h3>
-        <ul>
-          <li>View daily routines and adherence progress.</li>
-          <li>Mark routine tasks as completed.</li>
-          <li>Log blood pressure and pulse measurements.</li>
-        </ul>
+    <section class="grid" aria-label="Popular Services">
+      <article class="card">
+        <h3>Pay Utility Bill</h3>
+        <p>View your current water and sanitation bills and make secure online payments.</p>
+        <a href="#">Go to billing →</a>
       </article>
+      <article class="card">
+        <h3>Report Street Issues</h3>
+        <p>Submit pothole, streetlight, and sidewalk repair requests for your neighborhood.</p>
+        <a href="#">File a report →</a>
+      </article>
+      <article class="card">
+        <h3>Trash Collection Schedule</h3>
+        <p>Check pickup days, holiday delays, and recycling guidelines for your address.</p>
+        <a href="#">View schedule →</a>
+      </article>
+      <article class="card">
+        <h3>Permit Applications</h3>
+        <p>Apply for home improvement, event, and business permits online.</p>
+        <a href="#">Start application →</a>
+      </article>
+    </section>
 
-      <article class="panel">
-        <h3>Guardian workflow</h3>
-        <ul>
-          <li>Monitor linked patient adherence and latest vitals.</li>
-          <li>Receive real-time updates via SSE events.</li>
-          <li>Access alerts and acknowledge/resolution flows.</li>
-        </ul>
-      </article>
-
-      <article class="panel">
-        <h3>Risk and safety checks</h3>
-        <ul>
-          <li>Critical blood pressure threshold: 140/90 or higher.</li>
-          <li>Pulse warning threshold: 120 bpm or higher.</li>
-          <li>Audit log events for guardian monitor access.</li>
-        </ul>
-      </article>
+    <section class="announcements" aria-label="Announcements">
+      <h3>City Announcements</h3>
+      <ul>
+        <li>Town Hall meeting: Thursday, 7:00 PM at Civic Center Auditorium.</li>
+        <li>Spring cleanup week begins Monday. Bulk item pickup available by appointment.</li>
+        <li>Road work notice: Maple Avenue lane closures from April 8 to April 12.</li>
+      </ul>
     </section>
   </main>
 
   <footer>
     <div class="container">
-      Built for the Health repository MVP. Start the server and open <code>http://localhost:3000</code>.
+      © 2026 City of Brookfield. For emergencies call 911. For non-emergency services call (555) 010-2400.
     </div>
   </footer>
 </body>
