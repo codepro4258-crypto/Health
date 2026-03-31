@@ -5,6 +5,7 @@ This repository contains a simple Node.js MVP for patient routine tracking, vita
 ## What this project includes
 
 - **Patient dashboard** for daily routines and vitals entry.
+- **Food reminder planner** for meal scheduling with due-time status indicators.
 - **Guardian dashboard** for remote monitoring and alerts.
 - **HTTP API** for routines, vitals, monitor data, and alert acknowledgement.
 - **Server-Sent Events (SSE)** stream for guardian real-time updates.
@@ -23,8 +24,7 @@ npm start
 
 Then open:
 
-- `http://localhost:3000` - patient dashboard route served from `public/index.html`
-- `http://localhost:3000/guardian.html` - guardian dashboard
+- `http://localhost:3000` - unified health assistant dashboard served from `index.html`
 
 ## Notes
 
