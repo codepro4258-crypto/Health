@@ -1,7 +1,6 @@
 :root {
   --primary: #0e7490;
   --primary-dark: #155e75;
-  --accent: #7c3aed;
   --surface: #ffffff;
   --bg: #f8fafc;
   --border: #e2e8f0;
@@ -17,10 +16,7 @@
 body {
   margin: 0;
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  background:
-    radial-gradient(circle at 10% 0%, rgba(14, 116, 144, 0.08), transparent 35%),
-    radial-gradient(circle at 90% 0%, rgba(124, 58, 237, 0.08), transparent 35%),
-    var(--bg);
+  background: var(--bg);
   color: #0f172a;
 }
 
@@ -29,10 +25,9 @@ body {
   color: #fff;
   padding: 18px 16px;
   box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
+  background: var(--primary);
+  color: white;
+  padding: 16px;
 }
 
 .topbar h1 {
@@ -47,28 +42,28 @@ body {
   gap: 16px;
 }
 
+.app-layout {
+  grid-template-columns: 1fr;
+}
+
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: 12px;
   padding: 16px;
   box-shadow: 0 2px 8px rgba(2, 8, 23, 0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(2, 8, 23, 0.08);
 }
 
 .admin-panel {
-  border-left: 4px solid var(--accent);
+  border-left: 4px solid var(--primary);
 }
 
 .summary-grid {
   display: grid;
   gap: 10px;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
 }
 
 .summary-grid article {
@@ -80,6 +75,7 @@ body {
 
 .summary-grid h3,
 .card h3 {
+.summary-grid h3 {
   margin: 0 0 8px;
   font-size: 0.95rem;
 }
@@ -135,7 +131,7 @@ select {
 
 button {
   border: 0;
-  background: linear-gradient(120deg, var(--primary), var(--primary-dark));
+  background: var(--primary);
   color: #fff;
   border-radius: 10px;
   min-height: 42px;
@@ -148,7 +144,7 @@ button:hover {
 }
 
 button.secondary {
-  background: linear-gradient(120deg, #334155, #1e293b);
+  background: #334155;
 }
 
 button:disabled {
@@ -162,7 +158,6 @@ button:disabled {
 
 .status-text {
   margin-top: 10px;
-  font-weight: 500;
 }
 
 .ok {
@@ -188,24 +183,6 @@ button:disabled {
   white-space: nowrap;
 }
 
-.stream-chip {
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  border-radius: 999px;
-  padding: 6px 10px;
-  font-size: 0.82rem;
-  background: rgba(255, 255, 255, 0.14);
-}
-
-.stream-chip.live {
-  background: rgba(22, 163, 74, 0.25);
-  border-color: rgba(134, 239, 172, 0.6);
-}
-
-.stream-chip.offline {
-  background: rgba(185, 28, 28, 0.22);
-  border-color: rgba(254, 202, 202, 0.6);
-}
-
 .status-scheduled .pill {
   border-color: #bfdbfe;
   background: #eff6ff;
@@ -217,6 +194,73 @@ button:disabled {
   border-color: #fde68a;
   background: #fefce8;
   color: #854d0e;
+}
+
+.form-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.form-grid.two-cols {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+label {
+  display: grid;
+  gap: 6px;
+}
+
+input,
+select {
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  min-height: 44px;
+  padding: 8px;
+  font: inherit;
+}
+
+.ok {
+  color: var(--ok);
+}
+
+.bad {
+  color: var(--danger);
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.inline-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pill {
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 0.85rem;
+  text-transform: capitalize;
+}
+
+.status-overdue .pill {
+  border-color: #fecaca;
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.status-due-now .pill {
+  border-color: #fde68a;
+  background: #fefce8;
+  color: #854d0e;
+}
+
+.status-upcoming .pill {
+  border-color: #bfdbfe;
+  background: #eff6ff;
+  color: #1d4ed8;
 }
 
 .status-inactive .pill {
@@ -231,17 +275,4 @@ pre {
   border-radius: 10px;
   padding: 12px;
   overflow: auto;
-}
-
-.app-footer {
-  text-align: center;
-  color: var(--text-muted);
-  padding: 0 16px 24px;
-}
-
-@media (max-width: 760px) {
-  .topbar {
-    flex-direction: column;
-    align-items: flex-start;
-  }
 }
